@@ -21,7 +21,7 @@ body{
   display: flex;
 }
 
-.login-left{
+.login-left {
   flex-grow: 1;
   height: 100vh;
   background-color: #E9E9E9;
@@ -29,11 +29,30 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative; 
+  overflow: hidden;
 }
 
-.login-left img{
+.login-left-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/teacher.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; 
+  z-index: 0;
+}
+
+.quickcheck-logo {
+  position: relative;
+  z-index: 1;
   width: 400px;
 }
+
 
 .login-right{
 

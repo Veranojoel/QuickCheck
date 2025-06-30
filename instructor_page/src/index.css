@@ -88,3 +88,25 @@ body {
     margin: 10px 0;
   }
 }
+
+
+/*
+ush the New Branch to GitHub:
+To push your new branch to GitHub (the remote repository), run:
+
+bash
+Copy
+Edit
+git push --set-upstream origin <new-branch-name>
+For example, if your branch is feature-xyz, the command will be:
+
+bash
+Copy
+Edit
+git push --set-upstream origin feature-xyz
+This will:
+
+Push your local branch to the remote GitHub repository.
+
+Set the upstream branch so that you can use git push or git pull without specifying the remote and branch name each time.
+*/

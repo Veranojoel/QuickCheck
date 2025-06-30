@@ -1,0 +1,53 @@
+/* LandingPage.css */
+
+.class-name{
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.student-item {
+  background-color: #f0f0f0;
+  border-radius: 50px;
+  padding: 15px 25px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.student-item:hover {
+  background-color: #e0e0e0;
+}
+
+.student-input {
+  font-size: 1.1rem;
+  padding: 8px;
+  margin: 6px 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.student-button {
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  margin: 6px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.student-item {
+  margin-bottom: 12px;
+}
+
+.new-student-form {
+  margin-top: 24px;
+}
+
+.new-student-form h3 {
+  font-size: 1.2rem;
+}
