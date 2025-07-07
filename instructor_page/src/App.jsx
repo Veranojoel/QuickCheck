@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import Register from "./components/Register";
 import Admin from './components/Admin';
+import Student from './components/Student';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path='/landing' element={<LandingPage/>}/>
         <Route path='/register' element={<Register/>}/>
         <Route path='/admin' element={<Admin/>}/>
+        <Route path='/student' element={<Student/>}/>
         {/* Add more routes as needed */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
