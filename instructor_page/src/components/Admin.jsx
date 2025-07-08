@@ -8,7 +8,7 @@ function Admin() {
   const [users, setUsers] = useState([]);
   const [students, setStudents] = useState([]);
 
-  const [newEntry, setNewEntry] = useState({}); // will adjust based on mode
+  const [newEntry, setNewEntry] = useState({});
   const [editingId, setEditingId] = useState(null);
   const [editedData, setEditedData] = useState({});
   const [showAddPanel, setShowAddPanel] = useState(false);
@@ -160,37 +160,89 @@ function Admin() {
                           />
                         </>
                       ) : (
-                        <input
-                          className="edit-input"
-                          value={editedData.name || ""}
-                          placeholder="Name"
-                          onChange={(e) =>
-                            setEditedData({
-                              ...editedData,
-                              name: e.target.value,
-                            })
-                          }
-                        />
+                        <>
+                          <input
+                            className="edit-input"
+                            value={editedData.name || ""}
+                            placeholder="Name"
+                            onChange={(e) =>
+                              setEditedData({
+                                ...editedData,
+                                name: e.target.value,
+                              })
+                            }
+                          />
+                          <input
+                            className="edit-input"
+                            value={editedData.email || ""}
+                            placeholder="Email"
+                            onChange={(e) =>
+                              setEditedData({
+                                ...editedData,
+                                email: e.target.value,
+                              })
+                            }
+                          />
+                          <input
+                            className="edit-input"
+                            value={editedData.student_no || ""}
+                            placeholder="Student Number"
+                            onChange={(e) =>
+                              setEditedData({
+                                ...editedData,
+                                student_no: e.target.value,
+                              })
+                            }
+                          />
+                          <input
+                            className="edit-input"
+                            value={editedData.course || ""}
+                            placeholder="Course"
+                            onChange={(e) =>
+                              setEditedData({
+                                ...editedData,
+                                course: e.target.value,
+                              })
+                            }
+                          />
+                          <input
+                            className="edit-input"
+                            value={editedData.course_id || ""}
+                            placeholder="Course ID"
+                            onChange={(e) =>
+                              setEditedData({
+                                ...editedData,
+                                course_id: e.target.value,
+                              })
+                            }
+                          />
+                        </>
                       )}
-                      <button onClick={() => handleUpdate(item.id)}>Save</button>
-                      <button onClick={() => setEditingId(null)}>Cancel</button>
+                      <div className="action-buttons">
+                        <button onClick={() => handleUpdate(item.id)}>Save</button>
+                        <button onClick={() => setEditingId(null)}>Cancel</button>
+                      </div>
                     </>
                   ) : (
                     <>
-                      {mode === "A"
-                        ? `${item.full_name} (${item.email})`
-                        : item.name}
-                      <button
-                        onClick={() => {
-                          setEditingId(item.id);
-                          setEditedData(item);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button onClick={() => handleDelete(item.id)}>
-                        Delete
-                      </button>
+                      <span className="item-info">
+                        {mode === "A"
+                          ? `${item.full_name} (${item.email})`
+                          : `${item.name} | ${item.email} | ${item.student_no} | ${item.course} | ${item.course_id}`}
+                      </span>
+                      <div className="action-buttons">
+                        <button
+                          onClick={() => {
+                            setEditingId(item.id);
+                            setEditedData(item);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button onClick={() => handleDelete(item.id)}>
+                          Delete
+                        </button>
+                      </div>
                     </>
                   )}
                 </li>
@@ -221,7 +273,6 @@ function Admin() {
           </div>
 
           <div className="side-buttons">
-            <button className="big-btn">Edit</button>
             <button className="big-btn" onClick={() => setShowAddPanel(true)}>
               Add
             </button>
@@ -260,14 +311,48 @@ function Admin() {
                   />
                 </>
               ) : (
-                <input
-                  className="entry-input"
-                  placeholder="Name"
-                  value={newEntry.name || ""}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, name: e.target.value })
-                  }
-                />
+                <>
+                  <input
+                    className="entry-input"
+                    placeholder="Name"
+                    value={newEntry.name || ""}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, name: e.target.value })
+                    }
+                  />
+                  <input
+                    className="entry-input"
+                    placeholder="Email"
+                    value={newEntry.email || ""}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, email: e.target.value })
+                    }
+                  />
+                  <input
+                    className="entry-input"
+                    placeholder="Student Number"
+                    value={newEntry.student_no || ""}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, student_no: e.target.value })
+                    }
+                  />
+                  <input
+                    className="entry-input"
+                    placeholder="Course"
+                    value={newEntry.course || ""}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, course: e.target.value })
+                    }
+                  />
+                  <input
+                    className="entry-input"
+                    placeholder="Course ID"
+                    value={newEntry.course_id || ""}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, course_id: e.target.value })
+                    }
+                  />
+                </>
               )}
               <button onClick={handleCreate}>Save</button>
               <button onClick={() => setShowAddPanel(false)}>Cancel</button>
