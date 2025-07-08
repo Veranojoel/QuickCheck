@@ -29,4 +29,21 @@ public class UserService {
         return userRepo.findAll();
     }
 
+    public UserEntity updateUser(Long id, UserEntity updatedUser) {
+    UserEntity user = userRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+    
+    user.setFullName(updatedUser.getFullName());
+    user.setEmail(updatedUser.getEmail());
+    user.setPassword(updatedUser.getPassword());
+    // set other fields as needed
+
+    return userRepo.save(user);
+}
+
+public void deleteUser(Long id) {
+    userRepo.deleteById(id);
+}
+
+
 }

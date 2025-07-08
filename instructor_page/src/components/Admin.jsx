@@ -40,14 +40,13 @@ function Admin() {
 
     let payload = newEntry;
 
-    // Fix payload shape for students
     if (mode === "B") {
       payload = {
         name: newEntry.name,
         email: newEntry.email,
-        studentNo: newEntry.studentNo, // must match entity field name
+        studentNo: newEntry.studentNo,
         course: {
-          courseId: newEntry.courseId, // nested object
+          courseId: newEntry.courseId,
         },
       };
     }
@@ -109,7 +108,7 @@ function Admin() {
     <div className="app-container">
       <div className="left-panel">
         <div className="top-left-filters">
-          {mode === "B" && (
+          {mode === "B" ? (
             <>
               <select className="filter-select">
                 <option>Course</option>
@@ -131,8 +130,7 @@ function Admin() {
                 <option>Section C</option>
               </select>
             </>
-          )}
-          {mode === "A" && (
+          ) : (
             <>
               <select className="filter-select">
                 <option>Department</option>
@@ -164,12 +162,12 @@ function Admin() {
                         <>
                           <input
                             className="edit-input"
-                            value={editedData.full_name || ""}
+                            value={editedData.fullName || ""}
                             placeholder="Full Name"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                full_name: e.target.value,
+                                fullName: e.target.value,
                               })
                             }
                           />
@@ -242,7 +240,7 @@ function Admin() {
                     <>
                       <span className="item-info">
                         {mode === "A"
-                          ? `${item.full_name} (${item.email})`
+                          ? `${item.fullName} (${item.email})`
                           : `${item.name} | ${item.email} | ${item.studentNo} | ${item.course?.courseId || ""}`}
                       </span>
                       <div className="action-buttons">
@@ -310,9 +308,9 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Full Name"
-                    value={newEntry.full_name || ""}
+                    value={newEntry.fullName || ""}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, full_name: e.target.value })
+                      setNewEntry({ ...newEntry, fullName: e.target.value })
                     }
                   />
                   <input
