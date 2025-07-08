@@ -5,10 +5,29 @@ import "./css/Admin.css";
 function Admin() {
   const [mode, setMode] = useState("A"); // A = Users, B = Students
 
+  // === Initial entry templates ===
+  const initialUserEntry = {
+    full_name: "",
+    email: "",
+    password: "",
+  };
+
+  const initialStudentEntry = {
+    name: "",
+    email: "",
+    studentNo: "",
+    course: "",
+    courseId: "",
+  };
+
+  // === States ===
   const [users, setUsers] = useState([]);
   const [students, setStudents] = useState([]);
 
-  const [newEntry, setNewEntry] = useState({});
+  const [newEntry, setNewEntry] = useState(
+    mode === "A" ? initialUserEntry : initialStudentEntry
+  );
+
   const [editingId, setEditingId] = useState(null);
   const [editedData, setEditedData] = useState({});
   const [showAddPanel, setShowAddPanel] = useState(false);
@@ -18,6 +37,12 @@ function Admin() {
     fetchStudents();
   }, []);
 
+  useEffect(() => {
+    // Reset newEntry whenever mode changes
+    setNewEntry(mode === "A" ? initialUserEntry : initialStudentEntry);
+  }, [mode]);
+
+  // === Fetch functions ===
   const fetchUsers = () => {
     axios
       .get("http://localhost:8080/api/users")
@@ -32,6 +57,7 @@ function Admin() {
       .catch((err) => console.error("Fetch students error:", err));
   };
 
+  // === CRUD handlers ===
   const handleCreate = () => {
     const endpoint =
       mode === "A"
@@ -41,7 +67,7 @@ function Admin() {
       .post(endpoint, newEntry)
       .then(() => {
         mode === "A" ? fetchUsers() : fetchStudents();
-        setNewEntry({});
+        setNewEntry(mode === "A" ? initialUserEntry : initialStudentEntry); // Reset form
         setShowAddPanel(false);
       })
       .catch((err) => console.error("Create error:", err));
@@ -185,12 +211,12 @@ function Admin() {
                           />
                           <input
                             className="edit-input"
-                            value={editedData.student_no || ""}
+                            value={editedData.studentNo || ""}
                             placeholder="Student Number"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                student_no: e.target.value,
+                                studentNo: e.target.value,
                               })
                             }
                           />
@@ -207,12 +233,12 @@ function Admin() {
                           />
                           <input
                             className="edit-input"
-                            value={editedData.course_id || ""}
+                            value={editedData.courseId || ""}
                             placeholder="Course ID"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                course_id: e.target.value,
+                                courseId: e.target.value,
                               })
                             }
                           />
@@ -228,7 +254,7 @@ function Admin() {
                       <span className="item-info">
                         {mode === "A"
                           ? `${item.full_name} (${item.email})`
-                          : `${item.name} | ${item.email} | ${item.student_no} | ${item.course} | ${item.course_id}`}
+                          : `${item.name} | ${item.email} | ${item.studentNo} | ${item.course} | ${item.courseId}`}
                       </span>
                       <div className="action-buttons">
                         <button
@@ -287,7 +313,7 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Full Name"
-                    value={newEntry.full_name || ""}
+                    value={newEntry.full_name}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, full_name: e.target.value })
                     }
@@ -295,7 +321,7 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Email"
-                    value={newEntry.email || ""}
+                    value={newEntry.email}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, email: e.target.value })
                     }
@@ -304,7 +330,7 @@ function Admin() {
                     className="entry-input"
                     placeholder="Password"
                     type="password"
-                    value={newEntry.password || ""}
+                    value={newEntry.password}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, password: e.target.value })
                     }
@@ -315,7 +341,7 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Name"
-                    value={newEntry.name || ""}
+                    value={newEntry.name}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, name: e.target.value })
                     }
@@ -323,7 +349,7 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Email"
-                    value={newEntry.email || ""}
+                    value={newEntry.email}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, email: e.target.value })
                     }
@@ -331,15 +357,15 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Student Number"
-                    value={newEntry.student_no || ""}
+                    value={newEntry.studentNo}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, student_no: e.target.value })
+                      setNewEntry({ ...newEntry, studentNo: e.target.value })
                     }
                   />
                   <input
                     className="entry-input"
                     placeholder="Course"
-                    value={newEntry.course || ""}
+                    value={newEntry.course}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, course: e.target.value })
                     }
@@ -347,9 +373,9 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Course ID"
-                    value={newEntry.course_id || ""}
+                    value={newEntry.courseId}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, course_id: e.target.value })
+                      setNewEntry({ ...newEntry, courseId: e.target.value })
                     }
                   />
                 </>

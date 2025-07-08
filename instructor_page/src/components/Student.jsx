@@ -24,7 +24,6 @@ function StudentPage() {
 
   const handleCheckIn = () => {
     alert("Checked in successfully!");
-    // Implement actual check-in logic here
   };
 
   const handleLogin = (e) => {
