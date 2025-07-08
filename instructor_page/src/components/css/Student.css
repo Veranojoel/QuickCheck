@@ -1,0 +1,111 @@
+/* Student page container: full page background and centering */
+.student-page-container {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Top section branding */
+.student-page-container .top-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.student-page-container .top-section p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Bottom section container */
+.student-page-container .bottom-section {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 30px 20px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Form inputs */
+.student-page-container .auth-form input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.student-page-container .auth-form input:focus {
+  border-color: #333;
+}
+
+/* Password input container */
+.student-page-container .pass-input-div {
+  position: relative;
+}
+
+.student-page-container .pass-input-div input {
+  padding-right: 40px;
+}
+
+.student-page-container .pass-input-div svg {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+/* Main buttons */
+.student-page-container .main-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+  transition: background 0.2s, transform 0.1s;
+  margin-bottom: 12px; /* Added spacing between buttons */
+}
+
+.student-page-container .main-btn:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+}
+
+/* Toggle mode links */
+.student-page-container .toggle-mode {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #007BFF;
+  cursor: pointer;
+}
+
+.student-page-container .toggle-mode:hover {
+  text-decoration: underline;
+}
+
+/* Disabled button style */
+.student-page-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

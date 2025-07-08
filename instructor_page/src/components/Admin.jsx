@@ -35,10 +35,24 @@ function Admin() {
   const handleCreate = () => {
     const endpoint =
       mode === "A"
-        ? "http://localhost:8080/api/users"
+        ? "http://localhost:8080/api/users/register"
         : "http://localhost:8080/api/students";
+
+    let payload = newEntry;
+
+    if (mode === "B") {
+      payload = {
+        name: newEntry.name,
+        email: newEntry.email,
+        studentNo: newEntry.studentNo,
+        course: {
+          courseId: newEntry.courseId,
+        },
+      };
+    }
+
     axios
-      .post(endpoint, newEntry)
+      .post(endpoint, payload)
       .then(() => {
         mode === "A" ? fetchUsers() : fetchStudents();
         setNewEntry({});
@@ -65,8 +79,22 @@ function Admin() {
       mode === "A"
         ? `http://localhost:8080/api/users/${id}`
         : `http://localhost:8080/api/students/${id}`;
+
+    let payload = editedData;
+
+    if (mode === "B") {
+      payload = {
+        name: editedData.name,
+        email: editedData.email,
+        studentNo: editedData.studentNo,
+        course: {
+          courseId: editedData.courseId,
+        },
+      };
+    }
+
     axios
-      .put(endpoint, editedData)
+      .put(endpoint, payload)
       .then(() => {
         mode === "A" ? fetchUsers() : fetchStudents();
         setEditingId(null);
@@ -78,11 +106,9 @@ function Admin() {
 
   return (
     <div className="app-container">
-      {/* Left Section */}
       <div className="left-panel">
-        {/* Filter Section */}
         <div className="top-left-filters">
-          {mode === "B" && (
+          {mode === "B" ? (
             <>
               <select className="filter-select">
                 <option>Course</option>
@@ -104,8 +130,7 @@ function Admin() {
                 <option>Section C</option>
               </select>
             </>
-          )}
-          {mode === "A" && (
+          ) : (
             <>
               <select className="filter-select">
                 <option>Department</option>
@@ -124,7 +149,6 @@ function Admin() {
           )}
         </div>
 
-        {/* List Section */}
         <div className="list-view">
           <ul>
             {currentList.length === 0 ? (
@@ -138,12 +162,12 @@ function Admin() {
                         <>
                           <input
                             className="edit-input"
-                            value={editedData.full_name || ""}
+                            value={editedData.fullName || ""}
                             placeholder="Full Name"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                full_name: e.target.value,
+                                fullName: e.target.value,
                               })
                             }
                           />
@@ -185,34 +209,23 @@ function Admin() {
                           />
                           <input
                             className="edit-input"
-                            value={editedData.student_no || ""}
+                            value={editedData.studentNo || ""}
                             placeholder="Student Number"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                student_no: e.target.value,
+                                studentNo: e.target.value,
                               })
                             }
                           />
                           <input
                             className="edit-input"
-                            value={editedData.course || ""}
-                            placeholder="Course"
-                            onChange={(e) =>
-                              setEditedData({
-                                ...editedData,
-                                course: e.target.value,
-                              })
-                            }
-                          />
-                          <input
-                            className="edit-input"
-                            value={editedData.course_id || ""}
+                            value={editedData.courseId || ""}
                             placeholder="Course ID"
                             onChange={(e) =>
                               setEditedData({
                                 ...editedData,
-                                course_id: e.target.value,
+                                courseId: e.target.value,
                               })
                             }
                           />
@@ -227,14 +240,24 @@ function Admin() {
                     <>
                       <span className="item-info">
                         {mode === "A"
-                          ? `${item.full_name} (${item.email})`
-                          : `${item.name} | ${item.email} | ${item.student_no} | ${item.course} | ${item.course_id}`}
+                          ? `${item.fullName} (${item.email})`
+                          : `${item.name} | ${item.email} | ${item.studentNo} | ${item.course?.courseId || ""}`}
                       </span>
                       <div className="action-buttons">
                         <button
                           onClick={() => {
                             setEditingId(item.id);
-                            setEditedData(item);
+                            if (mode === "B") {
+                              setEditedData({
+                                id: item.id,
+                                name: item.name,
+                                email: item.email,
+                                studentNo: item.studentNo,
+                                courseId: item.course?.courseId || "",
+                              });
+                            } else {
+                              setEditedData(item);
+                            }
                           }}
                         >
                           Edit
@@ -252,7 +275,6 @@ function Admin() {
         </div>
       </div>
 
-      {/* Right Section */}
       <div className="right-panel">
         <div className="right-content">
           <div className="top-buttons">
@@ -278,7 +300,6 @@ function Admin() {
             </button>
           </div>
 
-          {/* Add Panel */}
           {showAddPanel && (
             <div className="add-panel">
               <h3>Add {mode === "A" ? "User" : "Student"}</h3>
@@ -287,9 +308,9 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Full Name"
-                    value={newEntry.full_name || ""}
+                    value={newEntry.fullName || ""}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, full_name: e.target.value })
+                      setNewEntry({ ...newEntry, fullName: e.target.value })
                     }
                   />
                   <input
@@ -331,25 +352,17 @@ function Admin() {
                   <input
                     className="entry-input"
                     placeholder="Student Number"
-                    value={newEntry.student_no || ""}
+                    value={newEntry.studentNo || ""}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, student_no: e.target.value })
-                    }
-                  />
-                  <input
-                    className="entry-input"
-                    placeholder="Course"
-                    value={newEntry.course || ""}
-                    onChange={(e) =>
-                      setNewEntry({ ...newEntry, course: e.target.value })
+                      setNewEntry({ ...newEntry, studentNo: e.target.value })
                     }
                   />
                   <input
                     className="entry-input"
                     placeholder="Course ID"
-                    value={newEntry.course_id || ""}
+                    value={newEntry.courseId || ""}
                     onChange={(e) =>
-                      setNewEntry({ ...newEntry, course_id: e.target.value })
+                      setNewEntry({ ...newEntry, courseId: e.target.value })
                     }
                   />
                 </>
