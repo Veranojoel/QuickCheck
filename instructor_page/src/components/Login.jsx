@@ -18,41 +18,46 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  toast.info("Logging in...");
+    toast.info("Logging in...", { autoClose: 1000 }); // Show info for 2 seconds
 
-  axios.post("http://localhost:8080/api/users/login", { email, password })
-    .then((res) => {
-      setEmail("");
-      setPassword("");
+    axios
+      .post("http://localhost:8080/api/users/login", { email, password })
+      .then((res) => {
+        setEmail("");
+        setPassword("");
 
-      toast.success("Login successful!");
+        toast.success("Login successful!", { autoClose: 1000 }); // 3 seconds
 
-      setTimeout(() => {
-        if (email.includes("@admin")) {
-          navigate("/admin");
-        } else {
-          navigate("/landing");
-        }
-      }, 1000);
-    })
-    .catch((err) => {
-      toast.error("Invalid credentials!");
-      console.error("Login error:", err);
-    });
-};
-
+        // Wait before navigating
+        setTimeout(() => {
+          if (email.includes("@admin")) {
+            navigate("/admin");
+          } else {
+            navigate("/landing");
+          }
+        }, 500); // Small delay to allow toast to display
+      })
+      .catch((err) => {
+        toast.error("Invalid credentials!", { autoClose: 4000 }); // 4 seconds
+        console.error("Login error:", err);
+      });
+  };
 
   return (
     <div className="login-main">
-  <div className="login-left">
-    <div
-    className="login-left-bg"
-    style={{ backgroundImage: `url(${TeacherImage})` }}
-  />
-    <img src={QuickCheckLogo} alt="QuickCheck Logo" className="quickcheck-logo" />
-  </div>
+      <div className="login-left">
+        <div
+          className="login-left-bg"
+          style={{ backgroundImage: `url(${TeacherImage})` }}
+        />
+        <img
+          src={QuickCheckLogo}
+          alt="QuickCheck Logo"
+          className="quickcheck-logo"
+        />
+      </div>
 
       <div className="login-right">
         <div className="login-right-container">
@@ -89,29 +94,32 @@ const Login = () => {
               </div>
 
               <div className="login-center-buttons">
-                <button type="submit" className="main-btn">Log In</button>
-                
+                <button type="submit" className="main-btn">
+                  Log In
+                </button>
+
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
                     console.log("Google login success:", credentialResponse);
 
-                      // Optional: Decode token or fetch user info
-                      // Example decode: https://jwt.io/ or jwt-decode lib
-                      navigate("/landing");
-                    }}
-                      onError={() => {
-                      console.log("Google login failed");
-                      alert("Google login failed!");
-                    }}
-                    />
-                    
+                    // Optional: Decode token or fetch user info
+                    // Example decode: https://jwt.io/ or jwt-decode lib
+                    navigate("/landing");
+                  }}
+                  onError={() => {
+                    console.log("Google login failed");
+                    alert("Google login failed!");
+                  }}
+                />
               </div>
             </form>
           </div>
 
           <p className="login-bottom-p">
             Don't have an account?{" "}
-            <a href="#" onClick={() => navigate("/register")}>Sign Up</a>
+            <a href="#" onClick={() => navigate("/register")}>
+              Sign Up
+            </a>
           </p>
         </div>
       </div>

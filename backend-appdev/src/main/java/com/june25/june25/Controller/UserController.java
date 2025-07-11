@@ -24,7 +24,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Error registering user: " + e.getMessage());
+                    .body("Error registering user: " + e.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class UserController {
         UserEntity user = userService.findByEmail(loginRequest.getEmail());
 
         if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
-            return ResponseEntity.ok(user); 
+            return ResponseEntity.ok(user);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
@@ -55,27 +55,27 @@ public class UserController {
     }
 
     // UPDATE user by ID
-@PutMapping("/{id}")
-public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
-    try {
-        UserEntity user = userService.updateUser(id, updatedUser);
-        return ResponseEntity.ok(user);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                             .body("Error updating user: " + e.getMessage());
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
+        try {
+            UserEntity user = userService.updateUser(id, updatedUser);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating user: " + e.getMessage());
+        }
     }
-}
 
-// DELETE user by ID
-@DeleteMapping("/{id}")
-public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-    try {
-        userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                             .body("Error deleting user: " + e.getMessage());
+    // DELETE user by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting user: " + e.getMessage());
+        }
     }
-}
 
 }
